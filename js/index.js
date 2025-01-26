@@ -227,6 +227,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const card = new Card(cardData, "#cardTemplate");
         const cardElement = card.generateCard();
 
+       
+
         cardGrid.appendChild(cardElement); 
         addCardClickEvents(); 
         console.log("New image card added:", title, imageUrl);
