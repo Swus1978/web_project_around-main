@@ -11,21 +11,26 @@ export class FormValidator {
     }
 
     _showInputError(inputElement, errorMessage) {
-        const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
+        let errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
+    
         if (!errorElement) {
-            console.error(`Error element not found for input: ${inputElement.id}`);
-            return;
+            console.error(`Error element not found for input: ${inputElement.id}. Creating one dynamically.`);
+            
+            errorElement = document.createElement("span");
+            errorElement.classList.add(`${inputElement.id}-error`, this.config.errorClass);
+            inputElement.insertAdjacentElement("afterend", errorElement);
         }
+    
         inputElement.classList.add(this.config.inputErrorClass);
         errorElement.textContent = errorMessage;
         errorElement.classList.add(this.config.errorClass);
     }
+    
 
     _hideInputError(inputElement) {
         const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
         if (!errorElement) return;
 
-        // ❌ Fix: Do NOT clear error if input is required and empty
         if (inputElement.validity.valueMissing) {
             errorElement.textContent = "Este campo no puede estar vacío.";
         } else {
