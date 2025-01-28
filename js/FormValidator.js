@@ -29,16 +29,14 @@ export class FormValidator {
 
     _hideInputError(inputElement) {
         const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
+        
         if (!errorElement) return;
-
-        if (inputElement.validity.valueMissing) {
-            errorElement.textContent = "Este campo no puede estar vacío.";
-        } else {
-            inputElement.classList.remove(this.config.inputErrorClass);
-            errorElement.classList.remove(this.config.errorClass);
-            errorElement.textContent = "";
-        }
+    
+        inputElement.classList.remove(this.config.inputErrorClass);
+        errorElement.classList.remove(this.config.errorClass);
+        errorElement.textContent = "";
     }
+    
 
     _checkInputValidity(inputElement) {
         if (!inputElement.validity.valid) {
