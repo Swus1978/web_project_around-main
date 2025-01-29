@@ -65,10 +65,8 @@
     z-index: 1000;
     width: auto;
     height: auto;
-    max-width: 75vw;
-    max-height: 75vh;
-    border-radius: 10px;
-    object-fit: cover;
+    
+   
 }
 
 .popup__image {

@@ -9,7 +9,7 @@ export class FormValidator {
             console.error("Form submit button not found for:", this._formElement);
         }
 
-        this._errorMessages = {}; // Store custom error messages
+        this._errorMessages = {}; 
     }
 
     // Show input error message
