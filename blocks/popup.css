@@ -24,11 +24,13 @@
 
 .overlay {
     position: fixed;
-    top: 0;
+    top: 20px;
     left: 0;
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.7);
+    background-repeat: repeat;
+    background-size: cover;
     display: none;
     z-index: 100;
 }
@@ -222,6 +224,13 @@
     .popup__close-button {
         left: 250px;
     }
+    .overlay{
+        margin-top: 250px;
+        margin-left: 50px;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
 }
 
 @media screen and (max-width: 320px) {
@@ -243,6 +252,7 @@
         height: 26px;
     }
     .overlay{
+        
         width: 100vw;
         height: 100vh;
         background-color: rgba(0, 0, 0, 0.7);

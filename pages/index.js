@@ -3,32 +3,38 @@ import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
-import { initialCards } from '../utils/constants.js';
+import { initialCards, cardGridSelector, selectors } from '../utils/constants.js'; 
 import { FormValidator } from '../components/FormValidator.js';
 import { togglePopup, createImageViewerPopup } from '../utils/utils.js';
+import { Popup } from '../components/Popup.js';
 
-const cardGridSelector = '.card-section__grid';
-const editProfileButton = document.querySelector('#editProfileButton');
-const openPopupButton = document.querySelector('#openPopupButton');
 
-const editPopup = document.querySelector('#editPopup');
-const addCardPopup = document.querySelector('#imagePopup');
+const addCardPopupInstance = new Popup(selectors.addCardPopup);
+addCardPopupInstance.setEventListeners();
 
-const template = document.querySelector('#popupTemplate'); 
+const openPopupButton = document.querySelector(selectors.openPopupButton);
+openPopupButton.addEventListener('click', () => {
+  addCardPopupInstance.open();
+  togglePopup(addCardPopup);
+});
+
+const editProfileButton = document.querySelector(selectors.editProfileButton);
+const editPopup = document.querySelector(selectors.editPopup);
+const addCardPopup = document.querySelector(selectors.addCardPopup);
+
+const template = document.querySelector(selectors.template);
 const popupClone = template.content.firstElementChild.cloneNode(true);
 document.body.appendChild(popupClone);
 
 const imageViewerPopup = new PopupWithImage('.popup--image-viewer');
+const userInfo = new UserInfo(selectors.authorTitle, selectors.authorText);
 
-const userInfo = new UserInfo('.author__title', '.author__text');
+const editNameInput = document.querySelector(selectors.editNameInput);
+const editTextInput = document.querySelector(selectors.editTextInput);
+const authorTitle = document.querySelector(selectors.authorTitle);
+const authorText = document.querySelector(selectors.authorText);
 
-const editNameInput = document.querySelector('#editName');
-const editTextInput = document.querySelector('#editText');
-const authorTitle = document.querySelector('.author__title');
-const authorText = document.querySelector('.author__text');
-
-const editProfilePopup = new PopupWithForm('#editPopup', handleProfileFormSubmit);
-const addCardPopupInstance = new PopupWithForm('#imagePopup', handleAddCardFormSubmit);
+const editProfilePopup = new PopupWithForm(selectors.editPopup, handleProfileFormSubmit);
 
 const cardSection = new Section(
   {
@@ -96,3 +102,7 @@ function addCardClickEvents() {
 }
 
 addCardClickEvents();
+
+
+
+console.log( imageViewerPopup )

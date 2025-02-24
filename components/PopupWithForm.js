@@ -1,11 +1,17 @@
 import { Popup } from './Popup.js';
-
 export class PopupWithForm extends Popup {
   constructor(popupSelector, handleFormSubmit) {
     super(popupSelector);
     this._handleFormSubmit = handleFormSubmit;
     this._form = this._popup.querySelector('.form');
     this._inputList = this._form.querySelectorAll('.form__input');
+
+    if (!this._form) {
+      console.error('Form not found in popup');
+    }
+    if (this._inputList.length === 0) {
+      console.error('No input fields found in form');
+    }
   }
 
   _getInputValues() {

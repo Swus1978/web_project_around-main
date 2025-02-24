@@ -42,13 +42,11 @@ export class Popup {
   }
 
   setEventListeners() {
-  
     const closeButton = this._popup.querySelector('.popup__close-button');
     if (closeButton) {
       closeButton.addEventListener('click', () => this.close());
     }
 
- 
     if (this._overlay) {
       this._overlay.addEventListener('click', (evt) => {
         if (evt.target === this._overlay) {
@@ -58,3 +56,5 @@ export class Popup {
     }
   }
 }
+
+

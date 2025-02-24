@@ -1,3 +1,5 @@
+// constants.js
+
 export const cardGridSelector = '.card-section__grid';
 
 export const initialCards = [
@@ -29,7 +31,7 @@ export const initialCards = [
 
 export const selectors = {
   editProfileButton: '#editProfileButton',
-  addCardButton: '#openPopupButton',
+  openPopupButton: '#openPopupButton',
   editPopup: '#editPopup',
   addCardPopup: '#imagePopup',
   template: '#popupTemplate',

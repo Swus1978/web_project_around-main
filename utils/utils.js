@@ -69,7 +69,7 @@ export const togglePopup = (popup) => {
     }
   };
   
-  const closePopup = (popupElement) => {
+  export const closePopup = (popupElement) => {
     popupElement.classList.remove('popup--open');
     setTimeout(() => popupElement.remove(), 300); 
     const overlay = document.getElementById('overlay');
