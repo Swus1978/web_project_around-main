@@ -1,37 +1,38 @@
 import { Popup } from './Popup.js';
-
 export class PopupWithForm extends Popup {
-  constructor(popupSelector, handleSubmit) {
+  constructor(popupSelector, handleFormSubmit) {
     super(popupSelector);
-    this._handleSubmit = handleSubmit;
-    this._form = this._popup.querySelector('form');
-    this._inputs = this._form.querySelectorAll('.form__input');
-    this._submitButton = this._form.querySelector('.form__submit');
-    this._submitButtonText = this._submitButton.textContent;
+    this._handleFormSubmit = handleFormSubmit;
+    this._form = this._popup.querySelector('.form');
+    this._inputList = this._form.querySelectorAll('.form__input');
+
+    if (!this._form) {
+      console.error('Form not found in popup');
+    }
+    if (this._inputList.length === 0) {
+      console.error('No input fields found in form');
+    }
   }
 
   _getInputValues() {
-    const values = {};
-    this._inputs.forEach(input => {
-      values[input.name] = input.value;
+    const inputValues = {};
+    this._inputList.forEach((input) => {
+      inputValues[input.name] = input.value;
     });
-    return values;
+    return inputValues;
   }
 
   setEventListeners() {
     super.setEventListeners();
-    this._form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      this._handleSubmit(this._getInputValues());
+    this._form.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+      this._handleFormSubmit(this._getInputValues());
+      this.close();
     });
   }
 
   close() {
     super.close();
     this._form.reset();
-  }
-
-  setLoading(isLoading) {
-    this._submitButton.textContent = isLoading ? 'Saving...' : this._submitButtonText;
   }
 }
