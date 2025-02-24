@@ -8,7 +8,7 @@ import { FormValidator } from '../components/FormValidator.js';
 
 const cardGridSelector = '.card-section__grid';
 const editProfileButton = document.querySelector('#editProfileButton');
-const addCardButton = document.querySelector('#openPopupButton');
+const openPopupButton = document.querySelector('#openPopupButton');
 
 const editPopup = document.querySelector('#editPopup');
 const addCardPopup = document.querySelector('#imagePopup');
@@ -50,9 +50,6 @@ editProfileButton.addEventListener("click", () => {
   editProfilePopup.open();
 });
 
-addCardButton.addEventListener('click', () => {
-  addCardPopupInstance.open();
-});
 
 function handleProfileFormSubmit(formData) {
   userInfo.setUserInfo({
@@ -86,3 +83,7 @@ editFormValidator.enableValidation();
 
 const addCardFormValidator = new FormValidator(validationConfig, addCardPopup.querySelector('form'));
 addCardFormValidator.enableValidation();
+
+
+
+

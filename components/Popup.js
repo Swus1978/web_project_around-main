@@ -15,16 +15,23 @@ export class Popup {
       throw new Error(`Popup with selector "${popupSelector}" not found.`);
     }
 
+    this._overlay = document.getElementById('overlay');
     this._handleEscClose = this._handleEscClose.bind(this);
   }
 
   open() {
     this._popup.classList.add('popup_opened');
+    if (this._overlay) {
+      this._overlay.style.display = 'block';
+    }
     document.addEventListener('keydown', this._handleEscClose);
   }
 
   close() {
     this._popup.classList.remove('popup_opened');
+    if (this._overlay) {
+      this._overlay.style.display = 'none';
+    }
     document.removeEventListener('keydown', this._handleEscClose);
   }
 
@@ -35,13 +42,19 @@ export class Popup {
   }
 
   setEventListeners() {
-    this._popup.addEventListener('mousedown', (evt) => {
-      if (
-        evt.target.classList.contains('editPopup') ||
-        evt.target.classList.contains('popup__close-button')
-      ) {
-        this.close();
-      }
-    });
+  
+    const closeButton = this._popup.querySelector('.popup__close-button');
+    if (closeButton) {
+      closeButton.addEventListener('click', () => this.close());
+    }
+
+ 
+    if (this._overlay) {
+      this._overlay.addEventListener('click', (evt) => {
+        if (evt.target === this._overlay) {
+          this.close();
+        }
+      });
+    }
   }
 }

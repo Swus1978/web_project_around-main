@@ -1,60 +1,67 @@
 export class Card {
-    constructor(data, templateSelector, handleCardClick) {
+  constructor(data, templateSelector, imagePopup) {
       this._name = data.name;
       this._link = data.link;
       this._templateSelector = templateSelector;
-      this._handleCardClick = handleCardClick;
-    }
-  
-    _getTemplate() {
+      this._imagePopup = imagePopup;
+  }
+
+  _getTemplate() {
       const template = document.querySelector(this._templateSelector);
       if (!template) {
-        throw new Error(`Template with selector "${this._templateSelector}" not found.`);
+          console.error(`Template not found: ${this._templateSelector}`);
+          return null;
       }
-      const cardElement = template.content.querySelector('.card-section__card').cloneNode(true);
-      return cardElement;
-    }
-  
-  
-    _setEventListeners() {
-      this._cardImage.addEventListener('click', () => this._handleCardClick(this._link, this._name));
-      this._likeButton.addEventListener('click', () => this._handleLikeClick());
-      this._deleteButton.addEventListener('click', () => this._handleDeleteClick());
-    }
-  
-    _handleLikeClick() {
-      this._likeButton.classList.toggle('card__button-like--active');
-    }
-  
-    _handleDeleteClick() {
-      this._cardElement.remove();
-    }
-  
-    generateCard() {
-      this._element = this._getTemplate();
-      this._cardImage = this._element.querySelector('.card-section__card-img');
-      this._cardTitle = this._element.querySelector('.card-section__card-title');
-  
-    
-      if (!this._cardImage) {
-        console.error('Card image element not found.');
-      }
-      if (!this._cardTitle) {
-        console.error('Card title element not found.');
-      }
-  
+
+      return template.content.querySelector('.card-section__card').cloneNode(true);
+  }
+
+  _handleImageClick() {
+      createImageViewerPopup(this._link, this._name);
+  }
+
+  _handleDeleteClick() {
+      this._cardElement.classList.add('card-section__card--removing');
+      this._cardElement.addEventListener('transitionend', () => {
+          this._cardElement.remove();
+      }, { once: true });
+  }
+
+  _handleLikeClick(event) {
+      event.target.classList.toggle('card-section__button-like--active');
+  }
+
+  _setEventListeners() {
+      
+      this._cardImage.addEventListener('click', () => this._handleImageClick());
+
+      this._deleteButton.addEventListener('click', (event) => {
+          event.stopPropagation(); 
+          this._handleDeleteClick();
+      });
+
+      this._likeButton.addEventListener('click', (event) => {
+          event.stopPropagation(); 
+          this._handleLikeClick(event);
+      });
+  }
+
+  generateCard() {
+      this._cardElement = this._getTemplate();
+      if (!this._cardElement) return null;
+
+      this._cardImage = this._cardElement.querySelector('.card-section__card-img');
+      this._deleteButton = this._cardElement.querySelector('.card-section__button-delete');
+      this._likeButton = this._cardElement.querySelector('.card-section__button-like');
+      this._cardTitle = this._cardElement.querySelector('.card-section__card-title');
+
       this._cardImage.src = this._link;
       this._cardImage.alt = this._name;
       this._cardTitle.textContent = this._name;
-  
-    
-      this._cardImage.addEventListener('click', () => {
-        this._handleImageClick(this._link, this._name);
-      });
-  
-      return this._element;
-    }
+
+
+      this._setEventListeners();
+
+      return this._cardElement;
   }
-
-
-  
+}
