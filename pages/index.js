@@ -5,6 +5,7 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { initialCards } from '../utils/constants.js';
 import { FormValidator } from '../components/FormValidator.js';
+import { togglePopup, createImageViewerPopup } from '../utils/utils.js';
 
 const cardGridSelector = '.card-section__grid';
 const editProfileButton = document.querySelector('#editProfileButton');
@@ -34,7 +35,7 @@ const cardSection = new Section(
     items: initialCards,
     renderer: (item) => {
       const card = new Card(item, '#cardTemplate', (link, name) => {
-        imageViewerPopup.open(link, name);
+        createImageViewerPopup(link, name);
       });
       cardSection.addItem(card.generateCard());
     },
@@ -44,38 +45,38 @@ const cardSection = new Section(
 
 cardSection.renderItems();
 
-editProfileButton.addEventListener("click", () => {
+editProfileButton.addEventListener('click', () => {
   editNameInput.value = authorTitle.textContent.trim();
   editTextInput.value = authorText.textContent.trim();
-  editProfilePopup.open();
+  togglePopup(editPopup);
 });
-
 
 function handleProfileFormSubmit(formData) {
   userInfo.setUserInfo({
     name: formData.name,
-    text: formData.text,  
+    text: formData.text,
   });
-  editProfilePopup.close();
+  togglePopup(editPopup);
 }
 
 function handleAddCardFormSubmit(formData) {
   const newCard = {
     name: formData.name,
-    link: formData.imageUrl,  
+    link: formData.imageUrl,
   };
   const card = new Card(newCard, '#cardTemplate', (link, name) => {
-    imageViewerPopup.open(link, name);
+    createImageViewerPopup(link, name);
   });
   cardSection.addItem(card.generateCard());
-  addCardPopupInstance.close();
+  togglePopup(addCardPopup);
+  addCardClickEvents();
 }
 
 const validationConfig = {
   inputSelector: '.form__input',
   submitButtonSelector: '.popup__button-submit',
   inputErrorClass: 'form__input-error',
-  errorClass: 'form__input-error_active'
+  errorClass: 'form__input-error_active',
 };
 
 const editFormValidator = new FormValidator(validationConfig, editPopup.querySelector('form'));
@@ -84,6 +85,14 @@ editFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(validationConfig, addCardPopup.querySelector('form'));
 addCardFormValidator.enableValidation();
 
+function addCardClickEvents() {
+  document.querySelectorAll('.card-section__card-img').forEach((img) => {
+    img.addEventListener('click', (event) => {
+      const cardImage = event.target;
+      const cardTitle = cardImage.closest('.card-section__card').querySelector('.card-section__card-title')?.textContent || 'Unknown Title';
+      createImageViewerPopup(cardImage.src, cardTitle);
+    });
+  });
+}
 
-
-
+addCardClickEvents();
