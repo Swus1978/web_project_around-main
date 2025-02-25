@@ -22,9 +22,6 @@ const editProfileButton = document.querySelector(selectors.editProfileButton);
 const editPopup = document.querySelector(selectors.editPopup);
 const addCardPopup = document.querySelector(selectors.addCardPopup);
 
-const template = document.querySelector(selectors.template);
-const popupClone = template.content.firstElementChild.cloneNode(true);
-document.body.appendChild(popupClone);
 
 const imageViewerPopup = new PopupWithImage('.popup--image-viewer');
 const userInfo = new UserInfo(selectors.authorTitle, selectors.authorText);
