@@ -12,62 +12,38 @@ export const togglePopup = (popup) => {
   };
   
 
-  export const createImageViewerPopup = (link, name) => {
-  
-    const existingPopup = document.querySelector('.popup--image-viewer');
-    if (existingPopup) existingPopup.remove();
-  
-  
-    const template = document.querySelector('#popupTemplate').content.cloneNode(true);
-    const popupElement = template.querySelector('.popup--image-viewer');
-  
-    if (!popupElement) {
-      console.error("Popup template not found!");
-      return;
+  export function createImageViewerPopup(imageUrl, imageName) {
+    let popup = document.querySelector("#viewerPopup");
+
+    if (!popup) {
+        popup = document.createElement("section");
+        popup.id = "viewerPopup";
+        popup.className = "popup popup--image-viewer";
+        popup.innerHTML = `
+            <img id="popupImage" class="popup__image" alt="" />
+            <div id="popupImageName" class="popup__image-name"></div>
+            <button class="popup__close-template-button" id="closeImageViewerPopupButton" title="Close">X</button>
+        `;
+        document.body.appendChild(popup);
+
+        popup.querySelector("#closeImageViewerPopupButton").addEventListener("click", () => {
+            popup.classList.remove("popup--active");
+        });
     }
-  
-    const popupImage = popupElement.querySelector('#popupImage');
-    const popupImageName = popupElement.querySelector('#popupImageName');
-    const closeImageViewerPopupButton = popupElement.querySelector('#closeImageViewerPopupButton');
-    const overlay = document.getElementById('overlay');
-  
-    if (!popupImage || !popupImageName || !closeImageViewerPopupButton) {
-      console.error("One or more popup elements are missing.");
-      return;
+
+    const popupImage = popup.querySelector("#popupImage");
+    const popupImageName = popup.querySelector("#popupImageName");
+
+    if (popupImage && popupImageName) {
+        popupImage.src = imageUrl;
+        popupImage.alt = imageName;
+        popupImageName.textContent = imageName;
+        popup.classList.add("popup--active");
+    } else {
+        console.error("Popup elements not found.");
     }
-  
-   
-    popupImage.src = link;
-    popupImage.alt = name;
-    popupImageName.textContent = name;
-  
-  
-    popupImage.onerror = function () {
-      this.src = './images/default-image.jpg'; 
-      this.alt = 'Image not available';
-    };
-  
+}
 
-    document.body.appendChild(popupElement);
-  
-
-    setTimeout(() => popupElement.classList.add('popup--open'), 10);
-    if (overlay) overlay.style.display = 'block';
-  
-
-    closeImageViewerPopupButton.addEventListener('click', () => {
-      closePopup(popupElement);
-    });
-  
-
-    if (overlay) {
-      overlay.addEventListener('click', (event) => {
-        if (!event.target.closest('.popup--image-viewer')) {
-          closePopup(popupElement);
-        }
-      });
-    }
-  };
   
   export const closePopup = (popupElement) => {
     popupElement.classList.remove('popup--open');

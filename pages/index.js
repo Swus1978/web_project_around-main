@@ -102,4 +102,3 @@ addCardClickEvents();
 
 
 
-console.log( imageViewerPopup )
