@@ -21,7 +21,7 @@ const editProfileButton = document.querySelector(selectors.editProfileButton);
 const editPopup = document.querySelector(selectors.editPopup);
 const addCardPopup = document.querySelector(selectors.addCardPopup);
 
-const imageViewerPopup = new PopupWithImage('.popup--image-viewer'); // Use PopupWithImage
+const imageViewerPopup = new PopupWithImage('.popup__image-viewer'); 
 const userInfo = new UserInfo(selectors.authorTitle, selectors.authorText);
 
 const editNameInput = document.querySelector(selectors.editNameInput);
