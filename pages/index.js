@@ -3,11 +3,10 @@ import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
-import { initialCards, cardGridSelector, selectors } from '../utils/constants.js'; 
+import { initialCards, cardGridSelector, selectors } from '../utils/constants.js';
 import { FormValidator } from '../components/FormValidator.js';
-import { togglePopup, createImageViewerPopup } from '../utils/utils.js';
+import { togglePopup } from '../utils/utils.js'; // Removed createImageViewerPopup
 import { Popup } from '../components/Popup.js';
-
 
 const addCardPopupInstance = new Popup(selectors.addCardPopup);
 addCardPopupInstance.setEventListeners();
@@ -22,8 +21,7 @@ const editProfileButton = document.querySelector(selectors.editProfileButton);
 const editPopup = document.querySelector(selectors.editPopup);
 const addCardPopup = document.querySelector(selectors.addCardPopup);
 
-
-const imageViewerPopup = new PopupWithImage('.popup--image-viewer');
+const imageViewerPopup = new PopupWithImage('.popup--image-viewer'); // Use PopupWithImage
 const userInfo = new UserInfo(selectors.authorTitle, selectors.authorText);
 
 const editNameInput = document.querySelector(selectors.editNameInput);
@@ -38,7 +36,7 @@ const cardSection = new Section(
     items: initialCards,
     renderer: (item) => {
       const card = new Card(item, '#cardTemplate', (link, name) => {
-        createImageViewerPopup(link, name);
+        imageViewerPopup.open(link, name); // Use PopupWithImage
       });
       cardSection.addItem(card.generateCard());
     },
@@ -67,9 +65,11 @@ function handleAddCardFormSubmit(formData) {
     name: formData.name,
     link: formData.imageUrl,
   };
+
   const card = new Card(newCard, '#cardTemplate', (link, name) => {
-    createImageViewerPopup(link, name);
+    imageViewerPopup.open(link, name); // Use PopupWithImage
   });
+
   cardSection.addItem(card.generateCard());
   togglePopup(addCardPopup);
   addCardClickEvents();
@@ -93,12 +93,9 @@ function addCardClickEvents() {
     img.addEventListener('click', (event) => {
       const cardImage = event.target;
       const cardTitle = cardImage.closest('.card-section__card').querySelector('.card-section__card-title')?.textContent || 'Unknown Title';
-      createImageViewerPopup(cardImage.src, cardTitle);
+      imageViewerPopup.open(cardImage.src, cardTitle); // Use PopupWithImage
     });
   });
 }
 
 addCardClickEvents();
-
-
-

@@ -1,5 +1,6 @@
-import { createImageViewerPopup } from "../utils/utils.js";
+import { createImageViewerPopup } from '../utils/utils.js';
 
+console.log(createImageViewerPopup); 
 export class Card {
     constructor(data, templateSelector) {
         this._name = data.name;

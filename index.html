@@ -43,6 +43,7 @@
             ></button>
           </div>
         </header>
+
         <div class="overlay" id="overlay"></div>
         <section
           class="popup"
@@ -59,6 +60,8 @@
               type="button"
             ></button>
             <h3 id="editPopupTitle" class="popup__title">Editar perfil</h3>
+
+            <!-- Formulario de edición de perfil -->
             <form class="form form_type_popup" name="editProfile">
               <label class="form__field" for="editName">
                 Título:
@@ -96,6 +99,7 @@
             </form>
           </div>
         </section>
+        <!-- Popup Image-->
         <section
           class="popup"
           id="imagePopup"
@@ -111,6 +115,8 @@
               type="button"
             ></button>
             <h3 id="imagePopupTitle" class="popup__title">Agregar Imagen</h3>
+            
+            <!-- Formulario de edición de imagen -->
             <form class="form form_type_popup" name="addImage">
               <label class="form__field" for="imageTitle">
                 Título:
@@ -124,7 +130,7 @@
                   required
                 />
                 <span class="form__input-error text-input-error"
-                  >Por favor, rellena este campo.</span
+                  >Por favor, rellena este campo.</span>
                 >
               </label>
               <label class="form__field" for="imageUrlInput">
@@ -156,30 +162,34 @@
             </form>
           </div>
         </section>
-
-        <section class="popup" id="viewerPopup">
-          <div class="popup popup--image-viewer">
-            <div class="popup__overlay"></div>
-            <div class="popup__content-image">
-              <button
-                class="popup__close-viewer-button"
-                id="closeImageViewerPopupButton"
-                title="Close"
-              ></button>
-              <img id="popupImage" class="popup__image" alt="Popup Image" />
-              <div id="popupImageName" class="popup__image-name"></div>
-            </div>
+        <!-- Popup ImageViewer-->
+        <section class="popup popup--image-viewer" id="viewerPopup">
+          <div class="popup__overlay"></div>
+          <div class="popup__content-image">
+            <button
+              class="popup__close-viewer-button"
+              id="closeImageViewerPopupButton"
+              title="Close"
+            ></button>
+            <img id="popupImage" class="popup__image" alt="Popup Image" />
+            <div id="popupImageName" class="popup__image-name"></div>
           </div>
         </section>
 
         <section class="card-section">
+          <!--Card Grid Selector-->
           <div class="card-section__grid"></div>
         </section>
+
+
       </main>
+
       <footer class="footer">
         <h3 class="footer__title">&copy;2024 Around The U.S.</h3>
       </footer>
     </div>
+
+    <!--Card Template-->
     <template id="cardTemplate">
       <div class="card-section__card">
         <img class="card-section__card-img" src="" alt="Card Image" />
@@ -188,6 +198,7 @@
         <button class="card-section__button-like"></button>
       </div>
     </template>
+
     <script type="module" src="./pages/index.js"></script>
   </body>
-</html> 
+</html>
