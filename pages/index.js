@@ -73,6 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const userInfo = new UserInfo({
     nameSelector: selectors.userName,
     jobSelector: selectors.userJob,
+    imageSelector: ".author__image",
+    imageUrlSelector: "#imageUrlInput",
   });
 
   let editProfilePopup;
@@ -142,6 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .querySelector(selectors.editPopup)
     ?.querySelector(".form_type_popup");
   if (editForm) {
+    console.log("Edit form found:", editForm.name);
     const editFormValidator = new FormValidator(validationConfig, editForm);
     editFormValidator.enableValidation();
     console.log("Edit form validation enabled");
@@ -155,6 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .querySelector(selectors.addCardPopup)
     ?.querySelector(".form_type_popup");
   if (addCardForm) {
+    console.log("Add card form found:", addCardForm.name);
     const addCardFormValidator = new FormValidator(
       validationConfig,
       addCardForm
