@@ -15,8 +15,13 @@ footer {
     margin-left: auto;
     margin-right: auto;
     color: #fff;
+<<<<<<< HEAD
     filter: blur(1px);
     opacity: 0.5;
+=======
+    filter: blur(1px); 
+    opacity: 0.5; 
+>>>>>>> be71d65aa3c2d4f736e087e261f0851c1b7d12bd
 }
 
 @media screen and (max-width: 880px) {
